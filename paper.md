@@ -83,3 +83,44 @@ The deep learning model will be evaluated using data that has not been previousl
 
 #### Phase 6: Deployment on the Web
 One of our main goals is to make this technology easily accessible to farmers. Once the deep learning model is trained and tested, we convert it to the ONNX format, making it usable in web scripts and compatible with a wide range of browsers. To host this system, we have chosen to use GitHub Pages, a free hosting solution, thereby offering this technology in a simple and cost-free manner to farmers. This approach aims to make the tool accessible, facilitating its practical use for early detection of plant diseases, thereby benefiting the agricultural community.
+
+## State of the art
+
+### Plant Disease Detection
+Effective plant disease detection techniques can be classified into two main categories: non-destructive and destructive techniques.
+
+#### Non-destructive Techniques
+- Visual inspection: It involves visually examining plants either with the naked eye or using a camera. This technique is simple and cost-effective but can be subjective and requires human expertise.
+- Infrared-based detection: It utilizes differences in infrared reflectance between healthy and diseased tissues. While more objective than visual detection, it requires specialized equipment.
+- Spectroscopy: By measuring light absorption in plants, this technique identifies diseases precisely. However, it necessitates expensive equipment.
+
+#### Destructive Techniques
+- Microscopy: It allows the observation of disease symptoms at a microscopic level. Though highly accurate, it requires expertise and can be destructive to plants.
+- Biochemical tests: These measure chemical concentrations in plant tissues. While quick and inexpensive, they might lack specificity for diseases.
+
+### NDVI and PRI Indices
+NDVI (Normalized Difference Vegetation Index): It uses the difference between near-infrared (NIR) and red wavebands to assess plant health. Higher NDVI values indicate healthier plants due to the way healthy plants absorb and reflect light differently from stressed or damaged ones.
+
+PRI (Photochemical Reflectance Index): It gauges plant health by comparing light reflectance at specific wavelengths (531 nm and 570 nm) to estimate chlorophyll content, crucial for photosynthesis and closely correlated with plant health.
+
+Both NDVI and PRI indices are calculated using light reflectance data collected by sensors, often from satellites, airplanes, or drones. However, these means of data collection can be costly for farmers or operators.
+
+### CNNs and Computer Vision
+Convolutional Neural Networks (CNNs) are a type of artificial neural network widely used in computer vision. CNNs excel at image processing by learning to recognize patterns in data. They are applied in image classification, object detection, and image segmentation.
+
+To extract features from an image, a CNN consists of:
+
+1. Convolutional layers: These layers apply filters (kernels) to extract features through convolution operations, identifying specific patterns like edges, textures, or shapes.
+
+2. Pooling layers: Also known as subsampling layers, they reduce spatial dimensionality by selecting the most important features extracted by convolutional layers, often through operations like max pooling or averaging.
+
+#### Network Architectures
+Architectures like LeNet, AlexNet, VGG, GoogLeNet (Inception), ResNet, and EfficientNet are commonly used CNN architectures, each with its depth, complexity, and performance characteristics.
+
+Specifically, ResNet introduced residual connections in 2015, addressing the degradation problem in deeper networks by allowing the addition of residual blocks.
+
+#### Transfer Learning
+This technique involves using pre-trained models on large datasets like ImageNet. Pre-trained layers can be reused for similar tasks, yielding good results even with smaller datasets.
+
+#### Enhancements and Regularizations
+Batch Normalization, Dropout, and data augmentation techniques such as rotation, horizontal/vertical flipping, random cropping, etc., are often used to improve model generalization and prevent overfitting.
