@@ -47,6 +47,11 @@ The four groups are structured as follows:
 
 - Group 4: Excessive Watering Group - In this group, irrigation will be tripled compared to the control group, inducing waterlogging to simulate plant drowning. Light exposure will remain similar to that of the control group to maintain consistent lighting conditions.
 
+<p align="center">
+  <img src="media/drawing1.svg" alt="experiments" width="400">
+</p>
+
+
 #### Phase 2: Data Collection
 This phase involves capturing images of basil plants at various stages of their growth. The shots are taken at a standard distance of 30 cm from the plants. The captures are meticulously planned at specific times of the day, namely at 9 am, 12 pm, and 5 pm, to limit external light variations that could disrupt data quality for deep learning model establishment. Furthermore, shots are taken from different angles to comprehensively capture all plant characteristics. This methodical approach aims to ensure consistency in the collected data and guarantee a complete representation of basil specimens for precise analysis by the deep learning model.
 
@@ -78,6 +83,11 @@ ResNet18 (fine-tuned)
 
 └── FC2 (4 neurons)
 
+<p align="center">
+  <img src="media/cnn2.png" alt="experiments" width="700">
+</p>
+
+
 #### Phase 5: Model Testing
 The deep learning model will be evaluated using data that has not been previously used in its training phase. This approach aims to assess the model's performance, accuracy, and resilience.
 
@@ -105,6 +115,10 @@ PRI (Photochemical Reflectance Index): It gauges plant health by comparing light
 
 Both NDVI and PRI indices are calculated using light reflectance data collected by sensors, often from satellites, airplanes, or drones. However, these means of data collection can be costly for farmers or operators.
 
+<p align="center">
+  <img src="media/drone_ndvi.png" alt="experiments" width="400">
+</p>
+
 ### CNNs and Computer Vision
 Convolutional Neural Networks (CNNs) are a type of artificial neural network widely used in computer vision. CNNs excel at image processing by learning to recognize patterns in data. They are applied in image classification, object detection, and image segmentation.
 
@@ -124,3 +138,7 @@ This technique involves using pre-trained models on large datasets like ImageNet
 
 #### Enhancements and Regularizations
 Batch Normalization, Dropout, and data augmentation techniques such as rotation, horizontal/vertical flipping, random cropping, etc., are often used to improve model generalization and prevent overfitting.
+
+<p align="center">
+  <img src="media/augmentation.png" alt="experiments" width="500">
+</p>
