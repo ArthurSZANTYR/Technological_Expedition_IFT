@@ -159,3 +159,22 @@ Batch Normalization, Dropout, and data augmentation techniques such as rotation,
 <p align="center">
   <img src="media/augmentation.png" alt="experiments" width="500">
 </p>
+
+## Process - Development
+
+### Data preparation
+
+Dans le domaine de l'apprentissage profond, la préparation des données est une étape cruciale. Ici, nous allons explorer comment charger les données d'un dataset spécifique, appliquer des techniques de data augmentation et finalement les convertir en tenseurs pour les utiliser avec PyTorch. Nous utilisons ici un dataset de feuilles de pommiers - this dataset comme from this kaggle contest : https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/overview 
+
+#### Data loading
+
+```python
+self.path = "dataset/plant-pathology-2020-fgvc7"
+self.path_dir_X = os.path.join(self.path, 'image')
+self.path_Y = os.path.join(self.path, 'train.csv')
+self.dataframe_Y = pd.read_csv(self.path_Y)
+self.labels = self.dataframe_Y.loc[:, 'healthy':'scab']
+```
+
+
+
