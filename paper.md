@@ -168,6 +168,16 @@ Dans le domaine de l'apprentissage profond, la préparation des données est une
 
 #### Data loading
 
+Le chargement des données commence par l'initialisation de la classe LeafDataset, qui hérite de Dataset de PyTorch. Cette étape est essentielle pour manipuler les données de manière efficace et structurée.
+
+```python
+class LeafDataset(Dataset):
+```
+
+Dans le constructeur de cette classe, nous allons charger les différentes images du dataset depuis le dossier "dataset/plant-pathology-2020-fgvc7" qui contient toutes les images de train et de test.
+
+Les étiquettes associés a ces différentes images ['healthy', 'scab', 'crop', 'multiple diseases'] sont stockés dans un fichier csv sous le nom "train.csv" que nous devons aussi charger en tant que dataframe_Y. 
+
 ```python
 self.path = "dataset/plant-pathology-2020-fgvc7"
 self.path_dir_X = os.path.join(self.path, 'image')
@@ -175,6 +185,153 @@ self.path_Y = os.path.join(self.path, 'train.csv')
 self.dataframe_Y = pd.read_csv(self.path_Y)
 self.labels = self.dataframe_Y.loc[:, 'healthy':'scab']
 ```
+
+#### Data augmentation
+
+La data augmentation est une technique pour augmenter artificiellement la diversité des données d'entraînement en les transformant de manière aléatoire et réaliste. Cela améliore la généralisation du modèle pour eviter le sur-apprentissage sur les memes photos.
+
+Techniques Appliquées :
+
+Pour appliquer ces techniques nous utilisons la bibliothéque albumentations.
+```python
+import albumentations as A
+```
+
+- RandomResizedCrop: Cette transformation change aléatoirement la taille et les proportions de l'image. Ici, on redimensionne les images à une taille définie pour assurer la cohérence.
+```python
+A.RandomResizedCrop(height=height_image, width=width_image, p=1.0)
+```
+- Rotate: Fait pivoter l'image d'un degré aléatoire pour simuler différentes orientations.
+```python
+A.Rotate(20, p=1.0)
+```
+- Flip & Transpose: Applique un retournement horizontal et/ou vertical, et transpose les images, ce qui augmente la variabilité des orientations et des perspectives.
+```python
+A.Flip(p=1.0)
+A.Transpose(p=1.0)
+```
+- Normalize: Normalise les images pour accélérer la convergence pendant l'entraînement en standardisant les valeurs de pixels.
+
+```python
+A.Normalize(p=1.0),
+```
+
+<p align="center">
+  <img src="media/augmentation.png" alt="experiments" width="500">
+</p>
+
+#### Conversion en tenseur
+
+La conversion en tenseurs est une étape fondamentale pour utiliser PyTorch. Les tenseurs sont des structures de données multidimensionnelles optimisées pour les calculs sur GPU, ce qui permet d'accélérer considérablement l'entraînement des modèles. 
+
+De plus, les tenseurs permettent d'exploiter efficacement les fonctionnalités avancées de PyTorch, comme la rétropropagation automatique pour le calcul des gradients - qui sera expliqué plus tard dans ce document.
+
+```python
+from albumentations.pytorch import ToTensorV2
+
+ToTensorV2(p=1.0)
+```
+
+<p align="center">
+  <img src="media/tensor.png" alt="experiments" width="500">
+</p>
+
+#### Récupération images transformées
+
+La méthode __getitem__ est appelée chaque fois qu'on accède à un élément du dataset avec un indice - elle joue un rôle crucial pour intégrer le dataset avec l'écosystème PyTorch, en particulier avec DataLoader(expliqué dans la suite du document) pour le chargement et la manipulation des données lors de l'entraînement des modèles.
+
+Cette méthode retourne donc en fonction d'un indice - une image et son étiquette associée.
+
+```python
+def __getitem__(self, index):
+    img_name = self.dataframe_Y.loc[index, 'image_id']  
+    img_path = f"{self.path_dir_X}/{img_name}.jpg"
+    image = plt.imread(img_path
+    image = self.transform(image = image)['image']
+    label = torch.tensor(np.argmax(self.labels.loc[index,:].values))  #
+    return image, label
+```
+
+### Model
+
+#### Fonctionnement d'un CNN
+
+Un CNN, ou Convolutional Neural Network, est une technique puissante de l'apprentissage profond (deep learning) utilisée principalement pour la vision par ordinateur, notamment dans la reconnaissance d'images. L'idée de base derrière les CNN est de simuler la manière dont le cerveau humain traite visuellement l'information. 
+
+- Entrée : Un CNN prend une image en entrée. Une image est essentiellement une grille de pixels, où chaque pixel a des valeurs de couleur (rouge, vert, bleu).
+
+- Filtres : Les CNN utilisent des filtres (ou des noyaux) pour extraire des caractéristiques importantes de l'image. Ces filtres sont de petites matrices (par exemple 3x3 ou 5x5) qui se déplacent sur toute l'image. À chaque position, le filtre effectue une opération de convolution qui combine les valeurs de pixels dans sa zone de couverture.
+
+- Cartes de caractéristiques : Les opérations de convolution créent des cartes de caractéristiques, qui sont essentiellement des images modifiées. Chaque carte de caractéristiques met en évidence une caractéristique spécifique de l'image, comme les bords, les coins, ou des motifs plus complexes.
+
+- Couches de pooling : Pour réduire la taille des cartes de caractéristiques et rendre le modèle plus efficace, des couches de pooling sont utilisées. Elles réduisent la résolution des cartes de caractéristiques en conservant les informations essentielles. Le pooling consiste généralement à prendre la valeur maximale (max-pooling) ou la moyenne (average-pooling) dans une petite région de la carte de caractéristiques.
+
+<p align="center">
+  <img src="media/cnn2.png" alt="experiments" width="700">
+</p>
+
+#### Fine-Tuning
+
+
+Le fine-tuning est une technique de transfert d'apprentissage qui consiste à utiliser un modèle pré-entraîné pour une tâche spécifique comme point de départ pour un modèle destiné à une autre tâche. Cette approche offre plusieurs avantages, notamment une amélioration des performances de classification finale.  Il a été initialement développé par Microsoft Research et entraîné sur le jeu de données ImageNet, qui contient plus d'un million d'images réparties dans plus de mille catégories différentes. Cela a permis à ResNet-18 (et d'autres architectures ResNet) d'apprendre des caractéristiques générales à partir d'un ensemble de données très vaste et diversifié.
+
+Dans le processus de fine-tuning, les premières couches du modèle pré-entraîné sont figées, ce qui signifie que leurs poids ne sont pas ajustés pendant la phase d'entraînement. Ces couches ont déjà acquis la compétence d'extraire les caractéristiques générales des images.
+
+Ici nous utiliserons RESNET18 pour cette partie de finne tunning qui remplace donc la couche CNN.
+
+ResNet-18 est une architecture de réseau de neurones profonds très populaire, faisant partie de la famille des réseaux résiduels (ResNets). Il a été introduit par Microsoft Research en 2015.
+
+ResNet-18 est composé de 18 couches de convolution, d'opérations de normalisation, et de couches de pooling. C'est une architecture profonde, mais plus légère que d'autres variantes de ResNet.
+
+<p align="center">
+  <img src="media/resnet18.png" alt="experiments" width="50">
+</p>
+
+#### Fully Connected layer
+
+Après le passage de l'image à travers les couches de convolution et de pooling, les couches fully connected (ou denses) jouent un rôle crucial dans la classification finale dans les réseaux de neurones convolutifs (CNN).
+
+##### Concept de perceptron 
+
+Les couches fully connected sont composées de perceptrons, qui sont les unités de base d'un réseau de neurones. Un perceptron fonctionne de la manière suivante :
+
+- Entrées Multiples : Chaque perceptron reçoit plusieurs entrées. Dans le contexte d'un CNN, ces entrées sont généralement les caractéristiques aplaties extraites des couches précédentes.
+
+- Poids : Chaque entrée est pondérée par un poids spécifique. Ces poids sont des paramètres apprenables qui sont ajustés pendant le processus d'entraînement.
+
+- Somme Pondérée : Le perceptron calcule la somme pondérée de ses entrées.
+
+- Fonction d'Activation : La somme pondérée est ensuite passée à travers une fonction d'activation, qui peut être non-linéaire, comme la fonction ReLU (Rectified Linear Unit) ou la fonction sigmoïde. Cette fonction d'activation aide à introduire de la non-linéarité dans le modèle, permettant au réseau de capturer des relations complexes dans les données.
+
+- Sortie : Le résultat est une sortie unique du perceptron, qui est ensuite transmise à d'autres neurones ou utilisée pour la classification finale.
+
+
+<p align="center">
+  <img src="media/perceptron.png" alt="experiments" width="500">
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
