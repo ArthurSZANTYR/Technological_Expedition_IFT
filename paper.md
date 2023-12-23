@@ -129,7 +129,10 @@ This phase involves capturing images of basil plants at various stages of their 
 - Multiple Angles: Plants' images were taken from various angles to capture a comprehensive view of all symptoms and plant characteristics.
 
 <p align="center">
-  <img src="media/photo_plants.png" alt="experiments" width="700">
+  <img src="media/data_collect1.png" alt="experiments" width="150">
+  <img src="media/data_collect2.png" alt="experiments" width="150">
+  <img src="media/data_collect3.png" alt="experiments" width="150">
+  <img src="media/data_collect4.png" alt="experiments" width="150">
 </p>
 
 ### Development of the application
@@ -203,7 +206,7 @@ ToTensorV2(p=1.0)
 ```
 
 <p align="center">
-  <img src="media/tensor.png" alt="experiments" width="500">
+  <img src="media/tensor1.png" alt="experiments" width="500">
 </p>
 
 #### Retrieving Transformed Images
@@ -237,7 +240,7 @@ A CNN, or Convolutional Neural Network, is a powerful deep learning technique pr
 - Pooling Layers: To reduce the size of the feature maps and make the model more efficient, pooling layers are used. They reduce the resolution of the feature maps while retaining essential information, typically taking the maximum (max-pooling) or average (average-pooling) value in a small region of the feature map.
 
 <p align="center">
-  <img src="media/cnn2.png" alt="experiments" width="700">
+  <img src="media/cnn2.svg" alt="experiments" width="700">
 </p>
 
 #### Fine-Tuning
@@ -279,6 +282,10 @@ Fully connected layers consist of perceptrons, the basic units of a neural netwo
   <img src="media/perceptron.png" alt="experiments" width="500">
 </p>
 
+<p align="center">
+  <img src="media/cnn1.svg" alt="experiments" width="700">
+</p>
+
 #### Training the Model
 
 Now that the dataset has been correctly loaded and the model defined, we need to iterate through the dataset to adjust the model's weights and improve its accuracy and efficiency with the training images for proper classification at the end of the model.
@@ -298,6 +305,9 @@ batches = iter(cycle(loader))
 for _ in tqdm(range(epochs * len(loader)), desc= 'fitting'):
     batch_X, batch_Y = next(batches)
 ```
+<p align="center">
+  <img src="media/batch.svg" alt="experiments" width="700">
+</p>
 
 ##### Forward Pass 
 
@@ -345,14 +355,17 @@ loss.backward()
 Once the gradients are calculated using .backward(), an optimization technique (such as gradient descent) is employed to adjust the model's weights in the direction that minimizes the loss. This is achieved by updating the weights proportionally to the calculated gradients.
 It determines how the weights should be adjusted (e.g., at what rate and in which direction) to reduce the loss.
 
-??????????????????????????????
-
 The process of computing gradients, adjusting weights, and repeating this operation is repeated many times (epochs) until the loss is sufficiently reduced or until the model converges to an optimal solution.
 
 ```python
 optimizer.step() 
 optimizer.zero_grad(set_to_none=True) 
 ```
+
+<p align="center">
+  <img src="media/gradientdescent-graph.gif" alt="experiments" width="400">
+</p>
+
 
 ##### Scheduler
 
