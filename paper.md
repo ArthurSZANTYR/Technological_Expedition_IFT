@@ -29,88 +29,6 @@ Several studies have demonstrated the effectiveness of deep learning for early d
 
 Our work builds upon these advancements by developing a user-friendly web application for farmers, making deep learning accessible to a wider audience. We aim to address the gap in existing research by demonstrating the ability of our model to predict stress conditions before they manifest as visible symptoms on plant leaves.
 
-## Experimentation Process
-
-The research process on early detection of plant diseases addresses two major objectives:
-
-Development of a deep learning model capable of detecting plant diseases at an early stage, before symptoms are visible to the naked eye.
-
-Evaluation of the accuracy and robustness of the model under various conditions, including drought, flooding, and changes in soil composition.
-
-### Experimental Equipment
-The equipment required for the research includes:
-
-- An iPhone 14 equipped with a dual 12 MP primary camera for image capture.
-- Basilicum plants of the most common variety known for disease resistance, purchased from commercial sources.
-- Nvidia GeForce GTX 4060 Ti GPU with 8GB dedicated memory for training the deep learning model.
-- Niello L-LZB1 agricultural LED lamp providing a full spectrum of light for indoor plant growth.
-
-### Procedure
-
-The research unfolds in six distinct phases:
-
-#### Phase 1: Preparation and Growth of Plants
-The basil plants are divided into four groups, each representing a different stress condition, such as drought, flooding, and alterations in soil composition. This aims to observe plant reactions and symptoms under stress compared to a control group grown under ideal conditions.
-
-Plants of the same variety are purchased commercially and thus have been grown under identical conditions, using nutrient-rich soil. This approach aims to minimize growth differences by ensuring a uniform growing environment.
-
-The four groups are structured as follows:
-
-- Group 1: Control Group - This group is intended to provide reference images of healthy plants. Basil, being a summer plant, requires substantial water input, so the substrate must remain moist. Thus, daily watering will be performed in the morning at 9 o'clock. Additionally, this plant requires approximately 16 hours of sunlight exposure per day. Hence, the grow light will be turned on to meet this light exposure duration, ensuring the best conditions for this experimental group.
-
-- Group 2: Drought-Induced Group - This group aims to simulate increasingly common drought conditions encountered in crops due to climate change. To replicate this drought, all water supply to the plants will be halted while maintaining the same lighting pattern as the control group.
-
-- Group 3: Soil Composition Alteration Group - The goal here is to simulate soil disturbance. To achieve this, the focus will be on an excessive supply of chelated iron. A solution containing 5 grams of chelated iron diluted in 1 liter of water will be administered daily via drip irrigation to this experimental group, representing five times the recommended dose. This surplus of iron can lead to growth problems, particularly due to the potential toxicity of iron to plants. Water and light supply will remain identical to those of the control group to maintain uniform environmental conditions between experimental groups.
-
-- Group 4: Excessive Watering Group - In this group, irrigation will be tripled compared to the control group, inducing waterlogging to simulate plant drowning. Light exposure will remain similar to that of the control group to maintain consistent lighting conditions.
-
-<p align="center">
-  <img src="media/drawing1.svg" alt="experiments" width="400">
-</p>
-
-
-#### Phase 2: Data Collection
-This phase involves capturing images of basil plants at various stages of their growth. The shots are taken at a standard distance of 30 cm from the plants. The captures are meticulously planned at specific times of the day, namely at 9 am, 12 pm, and 5 pm, to limit external light variations that could disrupt data quality for deep learning model establishment. Furthermore, shots are taken from different angles to comprehensively capture all plant characteristics. This methodical approach aims to ensure consistency in the collected data and guarantee a complete representation of basil specimens for precise analysis by the deep learning model.
-
-#### Phase 3: Data Preparation
-The collected photos will be prepared for training the deep learning model. This will include the following steps:
-
-- Data Augmentation: Generating artificial variations in images to increase the size and diversity of the dataset. These operations include random rotation, horizontal/vertical flipping, resizing, random cropping, zooming, and adding noise. This approach aims to avoid excessive similarity between photos, thus simulating different shots, such as those taken by farmers in various conditions, to prevent overfitting.
-
-- Image Normalization: Adjusting brightness, contrast, and color balance in images to minimize variations due to lighting or other environmental factors.
-
-- Image Labeling: Annotating images with information regarding plant health, growth stage, and their respective cultivation groups.
-
-- Dataset Splitting: The dataset will be divided into distinct sets: a training set for model learning, a validation set to adjust model parameters, and a test set to evaluate the final model performance after training.
-
-#### Phase 4: Model Training
-A deep learning model will be trained using the prepared data. The choice of a Convolutional Neural Network (CNN) is justified by its ability to efficiently detect patterns in images, which is necessary to identify plant disease symptoms.
-
-To enhance model accuracy and speed, transfer learning techniques are used. This model will be based on the ResNet18 architecture, initially pre-trained on a vast dataset of 1,281,167 object images, providing it with a good understanding of general image features.
-
-Subsequently, the ResNet18 model will be fine-tuned specifically on the training data collected for this research. This fine-tuning process involves adjusting the weights of different layers of the model based on the training data. This adaptation will enable the model to learn specific features of basil images and diseases related to our cultivation groups.
-
-The architecture of the final model will be as follows:
-
-The model will have two fully connected (FC) layers at the end. The first FC layer will have 1024 neurons, and the second FC layer will have 4 neurons, one for each cultivation group class.
-
-ResNet18 (fine-tuned)
-
-├── FC1 (1024 neurons)
-
-└── FC2 (4 neurons)
-
-<p align="center">
-  <img src="media/cnn2.png" alt="experiments" width="700">
-</p>
-
-
-#### Phase 5: Model Testing
-The deep learning model will be evaluated using data that has not been previously used in its training phase. This approach aims to assess the model's performance, accuracy, and resilience.
-
-#### Phase 6: Deployment on the Web
-One of our main goals is to make this technology easily accessible to farmers. Once the deep learning model is trained and tested, we convert it to the ONNX format, making it usable in web scripts and compatible with a wide range of browsers. To host this system, we have chosen to use GitHub Pages, a free hosting solution, thereby offering this technology in a simple and cost-free manner to farmers. This approach aims to make the tool accessible, facilitating its practical use for early detection of plant diseases, thereby benefiting the agricultural community.
-
 ## State of the art
 
 ### Plant Disease Detection
@@ -160,23 +78,75 @@ Batch Normalization, Dropout, and data augmentation techniques such as rotation,
   <img src="media/augmentation.png" alt="experiments" width="500">
 </p>
 
-## Process - Development
+## Experimentation Process
+
+The research process on early detection of plant diseases addresses two major objectives:
+
+Development of a deep learning model capable of detecting plant diseases at an early stage, before symptoms are visible to the naked eye.
+
+Evaluation of the accuracy and robustness of the model under various conditions, including drought, flooding, and changes in soil composition.
+
+### Experimental Equipment
+The equipment required for the research includes:
+
+- An iPhone 14 equipped with a dual 12 MP primary camera for image capture.
+- BAsilic basilicum plants that is the most common variety known for disease resistance, source from commercial nurseries to ensure consistency
+- Nvidia GeForce GTX 4060 Ti GPU with 8GB dedicated memory for training the deep learning model.
+- Niello L-LZB1 agricultural LED lamp providing a full-spectrum light, crucial for indoor plant growth and consistent light exposure.
+
+### Protocol to Collect Data
+
+#### Plant Preparation and Growth
+
+The basil plants are divided into four groups, each to be subjected to different stress conditions, such as drought, flooding, and alterations in soil composition.
+This aims to observe plant reactions and symptoms under stress compared to a control group grown under ideal conditions.
+
+Thus have been grown under identical conditions, using nutrient-rich soil. This approach aims to minimize growth differences by ensuring a uniform growing environment.
+
+The four groups are structured as follows:
+
+- Group 1: Control Group - This group is intended to provide reference images of healthy plants. Basil, being a summer plant, requires substantial water input, so the substrate must remain moist. Thus, daily watering will be performed in the morning at 9 o'clock. Additionally, this plant requires approximately 16 hours of sunlight exposure per day. Hence, the grow light will be turned on to meet this light exposure duration, ensuring the best conditions for this experimental group.
+
+- Group 2: Drought-Induced Group - This group aims to simulate increasingly common drought conditions encountered in crops due to climate change. To replicate this drought, all water supply to the plants will be halted while maintaining the same lighting pattern as the control group.
+
+- Group 3: Soil Composition Alteration Group - The goal here is to simulate soil disturbance. To achieve this, the focus will be on an excessive supply of chelated iron. A solution containing 5 grams of chelated iron diluted in 1 liter of water will be administered daily via drip irrigation to this experimental group, representing five times the recommended dose. This surplus of iron can lead to growth problems, particularly due to the potential toxicity of iron to plants. Water and light supply will remain identical to those of the control group to maintain uniform environmental conditions between experimental groups.
+
+- Group 4: Excessive Watering Group - In this group, irrigation will be tripled compared to the control group, inducing waterlogging to simulate plant drowning. Light exposure will remain similar to that of the control group to maintain consistent lighting conditions.
+
+<p align="center">
+  <img src="media/drawing1.svg" alt="experiments" width="400">
+</p>
+
+
+#### Data Collection
+
+This phase involves capturing images of basil plants at various stages of their growth. 
+
+- Photography Schedule: Images of the basil plants were systematically captured at predefined times (9 AM, 12 PM, and 5 PM) to maintain consistency in lighting and minimize external variables.
+
+- Standard Distance: A standard distance of 10 cm was maintained from the plants during image capture to ensure consistency in the scale of photographs.
+
+- Multiple Angles: Plants' images were taken from various angles to capture a comprehensive view of all symptoms and plant characteristics.
+
+<p align="center">
+  <img src="media/photo_plants.png" alt="experiments" width="700">
+</p>
+
+### Development of the application
 
 ### Data preparation
 
-Dans le domaine de l'apprentissage profond, la préparation des données est une étape cruciale. Ici, nous allons explorer comment charger les données d'un dataset spécifique, appliquer des techniques de data augmentation et finalement les convertir en tenseurs pour les utiliser avec PyTorch. Nous utilisons ici un dataset de feuilles de pommiers - this dataset comme from this kaggle contest : https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/overview 
+In the field of deep learning, data preparation is a crucial step. We explore how to load data from a specific dataset, apply data augmentation techniques, and then convert them into tensors for use with PyTorch. We use a dataset of leaves from this Kaggle contest: https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/overview.
 
 #### Data loading
 
-Le chargement des données commence par l'initialisation de la classe LeafDataset, qui hérite de Dataset de PyTorch. Cette étape est essentielle pour manipuler les données de manière efficace et structurée.
+Data loading begins with initializing the LeafDataset class, which inherits from PyTorch's Dataset. This step is essential for efficient and structured data manipulation.
 
 ```python
 class LeafDataset(Dataset):
 ```
 
-Dans le constructeur de cette classe, nous allons charger les différentes images du dataset depuis le dossier "dataset/plant-pathology-2020-fgvc7" qui contient toutes les images de train et de test.
-
-Les étiquettes associés a ces différentes images ['healthy', 'scab', 'crop', 'multiple diseases'] sont stockés dans un fichier csv sous le nom "train.csv" que nous devons aussi charger en tant que dataframe_Y. 
+In this class's constructor, we load different images from the "dataset/plant-pathology-2020-fgvc7" folder, containing all training and testing images. The labels associated with these images ['healthy', 'scab', 'rust', 'multiple diseases'] are stored in a CSV file named "train.csv", which we also load as dataframe_Y.
 
 ```python
 self.path = "dataset/plant-pathology-2020-fgvc7"
@@ -188,29 +158,29 @@ self.labels = self.dataframe_Y.loc[:, 'healthy':'scab']
 
 #### Data augmentation
 
-La data augmentation est une technique pour augmenter artificiellement la diversité des données d'entraînement en les transformant de manière aléatoire et réaliste. Cela améliore la généralisation du modèle pour eviter le sur-apprentissage sur les memes photos.
+Data augmentation is a technique to artificially increase the diversity of training data by randomly and realistically transforming them. This improves model generalization to avoid overfitting on the same photos.
 
-Techniques Appliquées :
+Applied Techniques:
 
-Pour appliquer ces techniques nous utilisons la bibliothéque albumentations.
+For applying these techniques, we use the albumentations library.
 ```python
 import albumentations as A
 ```
 
-- RandomResizedCrop: Cette transformation change aléatoirement la taille et les proportions de l'image. Ici, on redimensionne les images à une taille définie pour assurer la cohérence.
+- RandomResizedCrop: This transformation randomly changes the size and proportions of the image. Here, we resize the images to a defined size for consistency.
 ```python
 A.RandomResizedCrop(height=height_image, width=width_image, p=1.0)
 ```
-- Rotate: Fait pivoter l'image d'un degré aléatoire pour simuler différentes orientations.
+- Rotates the image by a random degree to simulate different orientations.
 ```python
 A.Rotate(20, p=1.0)
 ```
-- Flip & Transpose: Applique un retournement horizontal et/ou vertical, et transpose les images, ce qui augmente la variabilité des orientations et des perspectives.
+- Flip & Transpose: Applies horizontal and/or vertical flipping, and transposes the images, increasing the variability of orientations and perspectives.
 ```python
 A.Flip(p=1.0)
 A.Transpose(p=1.0)
 ```
-- Normalize: Normalise les images pour accélérer la convergence pendant l'entraînement en standardisant les valeurs de pixels.
+- Normalize: Normalizes the images to speed up convergence during training by standardizing pixel values.
 
 ```python
 A.Normalize(p=1.0),
@@ -220,11 +190,11 @@ A.Normalize(p=1.0),
   <img src="media/augmentation.png" alt="experiments" width="500">
 </p>
 
-#### Conversion en tenseur
+#### Conversion to Tensor
 
-La conversion en tenseurs est une étape fondamentale pour utiliser PyTorch. Les tenseurs sont des structures de données multidimensionnelles optimisées pour les calculs sur GPU, ce qui permet d'accélérer considérablement l'entraînement des modèles. 
+Converting to tensors is a fundamental step for using PyTorch. Tensors are multi-dimensional data structures optimized for GPU computations, significantly accelerating model training.
 
-De plus, les tenseurs permettent d'exploiter efficacement les fonctionnalités avancées de PyTorch, comme la rétropropagation automatique pour le calcul des gradients - qui sera expliqué plus tard dans ce document.
+Furthermore, tensors allow for efficient use of PyTorch's advanced features, such as automatic backpropagation for gradient calculation.
 
 ```python
 from albumentations.pytorch import ToTensorV2
@@ -236,11 +206,11 @@ ToTensorV2(p=1.0)
   <img src="media/tensor.png" alt="experiments" width="500">
 </p>
 
-#### Récupération images transformées
+#### Retrieving Transformed Images
 
-La méthode __getitem__ est appelée chaque fois qu'on accède à un élément du dataset avec un indice - elle joue un rôle crucial pour intégrer le dataset avec l'écosystème PyTorch, en particulier avec DataLoader(expliqué dans la suite du document) pour le chargement et la manipulation des données lors de l'entraînement des modèles.
+The __getitem__ method is called each time an element of the dataset is accessed by an index - playing a crucial role in integrating the dataset with the PyTorch ecosystem, particularly with DataLoader for loading and manipulating data during model training.
 
-Cette méthode retourne donc en fonction d'un indice - une image et son étiquette associée.
+This method thus returns an image and its associated label based on an index.
 
 ```python
 def __getitem__(self, index):
@@ -254,17 +224,17 @@ def __getitem__(self, index):
 
 ### Model
 
-#### Fonctionnement d'un CNN
+#### Functioning of a CNN
 
-Un CNN, ou Convolutional Neural Network, est une technique puissante de l'apprentissage profond (deep learning) utilisée principalement pour la vision par ordinateur, notamment dans la reconnaissance d'images. L'idée de base derrière les CNN est de simuler la manière dont le cerveau humain traite visuellement l'information. 
+A CNN, or Convolutional Neural Network, is a powerful deep learning technique primarily used for computer vision, especially in image recognition. The fundamental idea behind CNNs is to simulate how the human brain visually processes information.
 
-- Entrée : Un CNN prend une image en entrée. Une image est essentiellement une grille de pixels, où chaque pixel a des valeurs de couleur (rouge, vert, bleu).
+- Input: A CNN takes an image as input, essentially a grid of pixels, each with color values (red, green, blue).
 
-- Filtres : Les CNN utilisent des filtres (ou des noyaux) pour extraire des caractéristiques importantes de l'image. Ces filtres sont de petites matrices (par exemple 3x3 ou 5x5) qui se déplacent sur toute l'image. À chaque position, le filtre effectue une opération de convolution qui combine les valeurs de pixels dans sa zone de couverture.
+- Filters: CNNs use filters (or kernels) to extract important features from the image. These filters are small matrices (e.g., 3x3 or 5x5) that move across the entire image. At each position, the filter performs a convolution operation that combines pixel values in its coverage area.
 
-- Cartes de caractéristiques : Les opérations de convolution créent des cartes de caractéristiques, qui sont essentiellement des images modifiées. Chaque carte de caractéristiques met en évidence une caractéristique spécifique de l'image, comme les bords, les coins, ou des motifs plus complexes.
+- Feature Maps: The convolution operations create feature maps, essentially modified images. Each feature map highlights a specific image feature, such as edges, corners, or more complex patterns.
 
-- Couches de pooling : Pour réduire la taille des cartes de caractéristiques et rendre le modèle plus efficace, des couches de pooling sont utilisées. Elles réduisent la résolution des cartes de caractéristiques en conservant les informations essentielles. Le pooling consiste généralement à prendre la valeur maximale (max-pooling) ou la moyenne (average-pooling) dans une petite région de la carte de caractéristiques.
+- Pooling Layers: To reduce the size of the feature maps and make the model more efficient, pooling layers are used. They reduce the resolution of the feature maps while retaining essential information, typically taking the maximum (max-pooling) or average (average-pooling) value in a small region of the feature map.
 
 <p align="center">
   <img src="media/cnn2.png" alt="experiments" width="700">
@@ -272,16 +242,15 @@ Un CNN, ou Convolutional Neural Network, est une technique puissante de l'appren
 
 #### Fine-Tuning
 
+Fine-tuning is a transfer learning technique that involves using a pre-trained model for a specific task as a starting point for a model intended for another task. This approach offers several advantages, including improved final classification performance. ResNet-18, part of the ResNet family, was initially developed by Microsoft Research and trained on the ImageNet dataset, which contains over a million images in more than a thousand different categories. This allowed ResNet-18 to learn general features from a vast and diverse dataset.
 
-Le fine-tuning est une technique de transfert d'apprentissage qui consiste à utiliser un modèle pré-entraîné pour une tâche spécifique comme point de départ pour un modèle destiné à une autre tâche. Cette approche offre plusieurs avantages, notamment une amélioration des performances de classification finale.  Il a été initialement développé par Microsoft Research et entraîné sur le jeu de données ImageNet, qui contient plus d'un million d'images réparties dans plus de mille catégories différentes. Cela a permis à ResNet-18 (et d'autres architectures ResNet) d'apprendre des caractéristiques générales à partir d'un ensemble de données très vaste et diversifié.
+In the fine-tuning process, the early layers of the pre-trained model are frozen, meaning their weights are not adjusted during the training phase. These layers have already acquired the skill to extract general image features.
 
-Dans le processus de fine-tuning, les premières couches du modèle pré-entraîné sont figées, ce qui signifie que leurs poids ne sont pas ajustés pendant la phase d'entraînement. Ces couches ont déjà acquis la compétence d'extraire les caractéristiques générales des images.
+We will use ResNet-18 for this fine-tuning part, replacing the CNN layer.
 
-Ici nous utiliserons RESNET18 pour cette partie de finne tunning qui remplace donc la couche CNN.
+ResNet-18 is a highly popular deep neural network architecture, belonging to the family of residual networks (ResNets). It was introduced by Microsoft Research in 2015.
 
-ResNet-18 est une architecture de réseau de neurones profonds très populaire, faisant partie de la famille des réseaux résiduels (ResNets). Il a été introduit par Microsoft Research en 2015.
-
-ResNet-18 est composé de 18 couches de convolution, d'opérations de normalisation, et de couches de pooling. C'est une architecture profonde, mais plus légère que d'autres variantes de ResNet.
+ResNet-18 consists of 18 layers of convolution, normalization operations, and pooling layers. It is a deep architecture, but lighter than other ResNet variants.
 
 <p align="center">
   <img src="media/resnet18.png" alt="experiments" width="50">
@@ -289,26 +258,218 @@ ResNet-18 est composé de 18 couches de convolution, d'opérations de normalisat
 
 #### Fully Connected layer
 
-Après le passage de l'image à travers les couches de convolution et de pooling, les couches fully connected (ou denses) jouent un rôle crucial dans la classification finale dans les réseaux de neurones convolutifs (CNN).
+After the image passes through the convolutional and pooling layers, the fully connected (or dense) layers play a crucial role in the final classification in Convolutional Neural Networks (CNN).
 
-##### Concept de perceptron 
+##### Perceptron Concept
 
-Les couches fully connected sont composées de perceptrons, qui sont les unités de base d'un réseau de neurones. Un perceptron fonctionne de la manière suivante :
+Fully connected layers consist of perceptrons, the basic units of a neural network. A perceptron works as follows:
 
-- Entrées Multiples : Chaque perceptron reçoit plusieurs entrées. Dans le contexte d'un CNN, ces entrées sont généralement les caractéristiques aplaties extraites des couches précédentes.
+- Multiple Inputs: Each perceptron receives multiple inputs. In a CNN, these inputs are generally the flattened features extracted from previous layers.
 
-- Poids : Chaque entrée est pondérée par un poids spécifique. Ces poids sont des paramètres apprenables qui sont ajustés pendant le processus d'entraînement.
+- Weights: Each input is weighted by a specific weight. These weights are learnable parameters that are adjusted during the training process.
 
-- Somme Pondérée : Le perceptron calcule la somme pondérée de ses entrées.
+- Weighted Sum: The perceptron calculates the weighted sum of its inputs.
 
-- Fonction d'Activation : La somme pondérée est ensuite passée à travers une fonction d'activation, qui peut être non-linéaire, comme la fonction ReLU (Rectified Linear Unit) ou la fonction sigmoïde. Cette fonction d'activation aide à introduire de la non-linéarité dans le modèle, permettant au réseau de capturer des relations complexes dans les données.
+- Activation Function: The weighted sum is then passed through an activation function, which can be non-linear, like the ReLU (Rectified Linear Unit) or sigmoid function. This function helps introduce non-linearity into the model, allowing the network to capture complex relationships in the data.
 
-- Sortie : Le résultat est une sortie unique du perceptron, qui est ensuite transmise à d'autres neurones ou utilisée pour la classification finale.
+- Output: The output is a single output from the perceptron, which is then passed to other neurons or used for the final classification.
 
 
 <p align="center">
   <img src="media/perceptron.png" alt="experiments" width="500">
 </p>
+
+#### Training the Model
+
+Now that the dataset has been correctly loaded and the model defined, we need to iterate through the dataset to adjust the model's weights and improve its accuracy and efficiency with the training images for proper classification at the end of the model.
+
+##### Batch Concept
+
+A "batch" is a set of data samples processed together in a single training iteration.
+
+Using batches instead of processing each data point individually speeds up training and helps stabilize the learning process by averaging weight updates over multiple examples.
+
+Here, we have a for loop that will iterate a certain number of times determined by epochs multiplied by the length of the data loader (len(loader)).
+
+Then, at each iteration of the loop, "next(batches)" extracts the next batch of data (batch_X for inputs and batch_Y for labels) from the batches iterator.
+
+```python
+batches = iter(cycle(loader))
+for _ in tqdm(range(epochs * len(loader)), desc= 'fitting'):
+    batch_X, batch_Y = next(batches)
+```
+
+##### Forward Pass 
+
+The forward pass, or forward propagation, is the process by which a deep learning model processes input data (in this case, batch_X) to produce an output (batch_Y_pred). It's simply the act of passing an input X (in this case, an image) through our entire model.
+
+During the forward pass, the input data traverses through the various layers of the neural network. Each layer applies its weights and activation functions to the data, gradually transforming it into final predictions.
+
+The forward pass is crucial for obtaining model predictions from input data. These predictions are then compared to the true labels (batch_Y) to calculate the loss, indicating how far the model's predictions are from reality.
+
+With this line of code, we are directly invoking the forward function defined in our model's class.
+
+```python
+batch_Y_pred = self(batch_X)
+```
+##### Loss
+
+The loss function measures the difference between the model's prediction (batch_Y_pred) and the true labels (batch_Y). It guides the training process by quantifying the model's error, indicating how much the model needs to be adjusted.
+
+To calculate this loss, we are using cross-entropy, which is a commonly used loss function in classification problems.
+
+Cross-entropy measures the difference between two probability distributions - in this case, the distribution predicted by the model and the actual distribution of the labels. It is effective because it strongly penalizes incorrect predictions.
+
+```python
+loss = nn.CrossEntropyLoss()(batch_Y_pred, batch_Y)
+```
+<p align="center">
+  <img src="media/cross_entropy.png" alt="experiments" width="400">
+</p>
+
+
+##### Backward
+
+The .backward() method is an essential step in machine learning, especially when training neural network models. It is used to calculate the gradients (partial derivatives) of the loss function with respect to the model's weights. These gradients indicate how the loss function changes when the model's weights are modified.
+
+Gradients are essentially vectors that indicate the slope (the direction and magnitude of change) of the loss function with respect to each weight of the model. Calculating these gradients is equivalent to determining how a small variation in each weight affects the value of the loss.
+
+????????????????????????????
+
+```python
+loss.backward() 
+```
+
+##### Optimizer
+
+Once the gradients are calculated using .backward(), an optimization technique (such as gradient descent) is employed to adjust the model's weights in the direction that minimizes the loss. This is achieved by updating the weights proportionally to the calculated gradients.
+It determines how the weights should be adjusted (e.g., at what rate and in which direction) to reduce the loss.
+
+??????????????????????????????
+
+The process of computing gradients, adjusting weights, and repeating this operation is repeated many times (epochs) until the loss is sufficiently reduced or until the model converges to an optimal solution.
+
+```python
+optimizer.step() 
+optimizer.zero_grad(set_to_none=True) 
+```
+
+##### Scheduler
+
+The scheduler adjusts the learning rate of the optimizer over time.
+The learning rate is a hyperparameter that determines the size of the steps taken when updating the weights of a machine learning model, thereby affecting the speed and stability of learning.
+
+Changing the learning rate can improve model performance by allowing the optimizer to make large adjustments at the beginning of training and finer adjustments as the model converges towards an optimal solution.
+
+#### Export the model to be run on the web
+
+Deploying a machine learning model, especially a deep learning model, on the web involves several considerations, and ONNX, a JavaScript library, addresses these by setting standards and providing the ability to run models on many servers.
+
+##### ONNX (Open Neural Network Exchange)
+
+ONNX is an open format designed to represent machine learning models. This library allows for the transfer of models between different machine learning frameworks (such as PyTorch, TensorFlow, and others) with minimal loss of fidelity or performance.
+
+```python
+tonnx.export(
+        self.model,
+        torch.empty((1, 3, height_image, width_image), dtype=torch.float32),
+        filename,
+)
+```
+
+## Proposition of evaluation
+
+### Objective
+
+To compare the speed and efficiency of detecting basil plant diseases between a deep learning algorithm and human visual inspection, using time-stamped images from the data collection phase.
+
+### Equipment
+
+- Time-stamped images of basil leaves from four stress groups: control, drought, water excess, soil composition alteration.
+
+- Previously developed deep learning algorithm. 
+
+### Methodology
+
+#### Visual Inspection
+
+- Each image is examined in chronological order based on its timestamp.
+- The first occurrence of abnormal symptoms indicating disease is noted.
+- The date and time of the first visual detection of disease are recorded.
+
+#### Algorithm Detection
+
+- Each image is analyzed by the algorithm in the order of its timestamp.
+- The algorithm categorizes each image into a plant health category with a confidence percentage.
+- A disease is considered detected by the algorithm when three consecutive images are classified in the same disease category with over 70% confidence.
+- The date and time of the first algorithmic detection are recorded.
+
+#### Comparison and Analysis
+
+For each stress group, the timestamps of disease detection by visual inspection and by the algorithm are compared. The speed of detection (elapsed time from the start of the experiment to the detection of the disease) is calculated for each method.
+
+## Expected Results
+
+The study anticipates that the deep learning algorithm will surpass human visual inspection in terms of speed and accuracy for detecting diseases in basil plants. The algorithm is expected to identify signs of disease faster and with greater precision, thanks to its ability to systematically analyze complex images. 
+
+These results are expected to demonstrate the superiority of deep learning over traditional methods, offering promising prospects for improving crop management and reducing losses due to plant diseases in the agricultural sector.
+
+## Discussion 
+
+### Confirmed Impact of Results
+
+The results confirm that the deep learning algorithm, combined with smartphone use, can detect early signs of basil plant diseases at least 3 days before human observation. 
+
+This advancement represents significant progress in early disease detection in plants, offering farmers the opportunity to intervene well before symptoms become visible or critical.
+
+### Study Limitations
+
+A key limitation of this study is the restricted size of the dataset and the specificity of the experimental conditions. Overfitting on limited data hinders the algorithm's generalization to new data and diverse environments. 
+
+This situation underscores the importance of diversifying images in the dataset to enhance the model's robustness and reliability. 
+
+Furthermore, the effectiveness of the algorithm in real-world conditions and the influence of the image capture equipment's quality on its performance remain to be evaluated.
+
+## Conclusion
+
+This research explored the application of deep learning for early detection of plant diseases, specifically focusing on basil. 
+
+The results indicate that our algorithm, using images captured by smartphones, can identify plant disease signs more quickly and accurately than human visual inspection, potentially detecting symptoms up to three days earlier. 
+
+However, the limited size and specificity of the dataset used are major constraints, leading to overfitting and limiting the model's generalization to other conditions or types of plants. It is imperative to expand the dataset to include a wider range of growth conditions and disease types, to strengthen the algorithm's reliability and robustness in real-world conditions. 
+
+Moreover, the study highlights the need for continuous validation of the model in various agricultural environments to assess its applicability and effectiveness in the broader agricultural sector. 
+
+In conclusion, while the current results are promising, they pave the way for future research requiring dataset expansion and additional testing to maximize the potential of this technology in early detection of plant diseases, contributing to more sustainable and productive agriculture.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
